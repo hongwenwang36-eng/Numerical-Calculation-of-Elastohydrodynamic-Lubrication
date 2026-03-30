@@ -1,5 +1,6 @@
 <div align="center">
-  <img src="./logo.png" alt="金策智算 Logo" width="140" />
+  <img src="./figures/数值流体动力润滑的数值计算.png" alt="数值流体动力润滑的数值计算" width="500" />
+</div>
   <h1>金策智算 · 智能投研决策系统</h1>
   <p>基于唐朝的三省六部制度建立的量化系统，分权协同、风控闭环、强化回测与执行。</p>
 </div>
