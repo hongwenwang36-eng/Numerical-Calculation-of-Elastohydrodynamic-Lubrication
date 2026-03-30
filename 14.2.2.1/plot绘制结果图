@@ -1,0 +1,71 @@
+function plot_fig142()
+% Plot Figure 14.2: Pressure and film thickness with single deep depression
+% Data file OUT.DAT must contain 3 columns per row: X, P, H
+% Each DA block has N=101 rows (must match your main code)
+
+    fname = 'OUT.DAT';
+    if exist(fname,'file') ~= 2
+        error(['Cannot find OUT.DAT in current folder: ', pwd]);
+    end
+
+    M = readmatrix(fname);
+    if size(M,2) < 3
+        error('OUT.DAT must have at least 3 columns: X, P, H.');
+    end
+
+    Xcol = M(:,1);
+    Pcol = M(:,2);
+    Hcol = M(:,3);
+
+    N = 101; % must match your main program
+    totalRows = numel(Xcol);
+
+    if mod(totalRows, N) ~= 0
+        error('Row count (%d) is not a multiple of N=%d. Check OUT.DAT.', totalRows, N);
+    end
+
+    nBlock = totalRows / N;
+
+    % --------- DA values used in SOLVING (not the DA after you increment before writing) ---------
+    % Your code solves DA = 0.0, 0.5, 1.0, ... (because you start DA=0 and then increase by 0.5).
+    % Usually with "DA < 1.1" you will get 3 blocks: 0.0, 0.5, 1.0.
+    DA_used = 0.5*(0:nBlock-1);
+
+    % Reshape into N-by-nBlock
+    P_all = reshape(Pcol, [N, nBlock]);
+    H_all = reshape(Hcol, [N, nBlock]);
+    X = Xcol(1:N);
+
+    figure; hold on; box on;
+
+    % --- plot pressure curves ---
+    for k = 1:nBlock
+        plot(X, P_all(:,k), 'LineWidth', 1.5);
+    end
+
+    % --- plot film thickness curves ---
+    for k = 1:nBlock
+        plot(X, H_all(:,k), 'LineWidth', 1.5);
+        % 如果你想像论文里更容易区分，可改成虚线：
+        % plot(X, H_all(:,k), '--', 'LineWidth', 1.5);
+    end
+
+    xlim([min(X), max(X)]);
+    ylim([0, 2]);  % 按论文图一般是 0~2；不合适就改
+
+    xlabel('x');
+    ylabel('P(x), H(x)');
+    title('Pressure and film thickness with single deep depression');
+
+    % Legend: first P, then H (optional)
+    lgd = cell(1, 2*nBlock);
+    for k = 1:nBlock
+        lgd{k} = sprintf('P, DA=%.2f', DA_used(k));
+    end
+    for k = 1:nBlock
+        lgd{nBlock+k} = sprintf('H, DA=%.2f', DA_used(k));
+    end
+    legend(lgd, 'Location', 'best');
+
+    hold off;
+end
