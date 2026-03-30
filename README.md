@@ -1,56 +1,55 @@
 <div align="center">
-  <img src="./figures/数值流体动力润滑的数值计算.png" alt="数值流体动力润滑的数值计算" width="500" />
+  <img src="./figure/0.png" alt="数值流体动力润滑的数值计算" width="500" />
 </div>
-  <h1>金策智算 · 智能投研决策系统</h1>
-  <p>基于唐朝的三省六部制度建立的量化系统，分权协同、风控闭环、强化回测与执行。</p>
-</div>
-
-<p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white" />
-  <img alt="Framework" src="https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white" />
-  <img alt="Frontend" src="https://img.shields.io/badge/UI-Dashboard-0A66C2?logo=googlechrome&logoColor=white" />
-  <img alt="Status" src="https://img.shields.io/badge/Status-Active-success" />
-  <img alt="Market" src="https://img.shields.io/badge/Market-A--Share-red" />
-</p>
+  <h1>《Numerical Calculation of Elastohydrodynamic Lubrication》</h1>
+  <p>将数值流体动力润滑程序计算的Fortran代码改写成Matlab代码，并对书中数据结果进行复现，分析</p>
 
 ## 目录
 
-- [项目简介](#项目简介)
-- [核心特性](#核心特性)
-- [架构设计](#架构设计)
-- [项目结构](#项目结构)
-- [快速开始](#快速开始)
-- [数据准备](#数据准备)
-- [数据源与使用条件](#数据源与使用条件)
-- [安全基线](#安全基线)
-- [已知限制](#已知限制)
-- [Roadmap](#roadmap)
-- [贡献指南](#贡献指南)
+- [14.2.1](#14.2.1)
+- [14.2.2](#14.2.2)
+- [14.3](#14.3)
+- [14.4](#14.4)
 
-## 项目简介
+## 14.2.1
 
-本项目采用“三省六部”思想构建量化系统，把**策略生成、风控审核、执行清算**分层解耦，支持A股以下核心场景：
+正弦粗糙度，线接触，并且用Newton–Raphson迭代求解粗糙表面EHL。
 
-- 历史回测与报告输出
-- 实盘监控与风控拦截
-- 多策略统一管理（内置 + 自定义）
-- Web 面板配置与任务控制
+在膜厚方程中把粗糙度写成DAsin(2Πx)，叠加到光滑膜厚上。
 
-<img width="2397" height="1343" alt="image" src="https://github.com/user-attachments/assets/01f37497-e060-4755-a44b-03f43c8dc4e6" />
+为了避免NR迭代一开始就发散，程序在主循环中从DA=0开始逐步增大，每次都以前一次收敛解作为初值继续迭代；程序最终输出每个节点的X，压力P，膜厚H，用于画出不同DA下的曲线。随着DA增大，膜厚变化不大但压力变化很明显，且DA继续增大到一定程度会出现迭代发散。
 
+DA等于 0，0.05，0.1，0.15的PH图如下 
 
-## 核心特性
+- 书中Fortran代码绘制
+<div align="center">
+  <img src="./figure/1.png" alt="1" width="500" />
+</div>
 
-- 多策略并行：内置策略与用户策略统一纳管
-- 风控优先：门下省一票否决机制，覆盖止损、回撤、仓位约束
-- 回测闭环：从数据获取、信号执行到结果分析全链路打通
-- 数据源可切换：AkShare / Tushare / 默认 API
-- 可视化运维：`server.py + dashboard.html` 提供操作面板
+- Matlab代码绘制
+<div align="center">
+  <img src="./figure/2.png" alt="2" width="500" />
+</div>
 
-<img width="2508" height="1431" alt="image" src="https://github.com/user-attachments/assets/dce52494-76c8-4c4b-ba22-772dd9cb8e83" />
+## 14.2.2
 
+单个深凹坑粗糙度，线接触，Newton–Raphson。
 
-![](C:\Users\scott\AppData\Roaming\marktext\images\2026-03-23-22-14-57-image.png)
+粗糙度不再是正弦，而是一个深凹坑。
+
+深凹坑会使局部压力计算出现趋零甚至“负压”倾向，但EHL常用假设是负压必须截断为0，当某些节点压力被置零时，要对NR线性化得到的系数矩阵对应行列进行修改（把相关行列清零、主对角置1、右端项置0一类的处理），以保证迭代仍然可解且物理约束成立。
+
+14.2.2是在14.2.1“逐步增大粗糙度幅值以避免发散”的思路上，进一步加入了对深凹坑导致的空化/负压截断的数值处理。
+
+- 书中Fortran代码绘制
+<div align="center">
+  <img src="./figure/3.png" alt="3" width="500" />
+</div>
+
+- Matlab代码绘制
+<div align="center">
+  <img src="./figure/4.png" alt="4" width="500" />
+</div>
 
 ## 架构设计(智能体智能）
 
