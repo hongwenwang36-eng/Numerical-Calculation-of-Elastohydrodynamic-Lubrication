@@ -24,12 +24,12 @@ DA等于 0，0.05，0.1，0.15的PH图如下
 
 - 书中Fortran代码绘制
 <div align="center">
-  <img src="./figure/1.png" alt="1" width="800" />
+  <img src="./figure/1.png" alt="1" width="700" />
 </div>
 
 - Matlab代码绘制
 <div align="center">
-  <img src="./figure/2.png" alt="2" width="800" />
+  <img src="./figure/2.png" alt="2" width="700" />
 </div>
 
 ## 14.2.2
@@ -45,12 +45,12 @@ DA等于 0，0.05，0.1，0.15的PH图如下
 
 - 书中Fortran代码绘制
 <div align="center">
-  <img src="./figure/3.png" alt="3" width="800" />
+  <img src="./figure/3.png" alt="3" width="700" />
 </div>
 
 - Matlab代码绘制
 <div align="center">
-  <img src="./figure/4.png" alt="4" width="800" />
+  <img src="./figure/4.png" alt="4" width="700" />
 </div>
 
 ## 14.3
@@ -66,15 +66,15 @@ DA等于 0，0.05，0.1，0.15的PH图如下
 
 - 书中Fortran代码绘制
 <div align="center">
-  <img src="./figure/5.png" alt="5" width="800" />
+  <img src="./figure/5.png" alt="5" width="700" />
 </div>
   
 - Matlab代码绘制
 <div align="center">
-  <img src="./figure/6.png" alt="6" width="800" />
+  <img src="./figure/6.png" alt="6" width="700" />
 </div>
 <div align="center">
-  <img src="./figure/7.png" alt="7" width="800" />
+  <img src="./figure/7.png" alt="7" width="700" />
 </div>
 随机生成的粗糙度于原文中不一致，matlab绘制的图跟原文不一致。
 
@@ -89,26 +89,25 @@ DA等于 0，0.05，0.1，0.15的PH图如下
 
 - 书中Fortran代码绘制
 <div align="center">
-  <img src="./figure/8.png" alt="8" width="800" />
+  <img src="./figure/8.png" alt="8" width="700" />
 </div>
 
 - Matlab代码绘制
 
 <div align="center">
-  <img src="./figure/9.png" alt="9" width="800" />
+  <img src="./figure/9.png" alt="9" width="700" />
 </div>
 
 <div align="center">
-  <img src="./figure/10.png" alt="10" width="800" />
+  <img src="./figure/10.png" alt="10" width="700" />
 </div>
 
 <div align="center">
-  <img src="./figure/11.png" alt="11" width="800" />
+  <img src="./figure/11.png" alt="11" width="700" />
 </div>
 
 matlab绘制的图如下，随机生成粗糙度由于无法与原文保持一致，编写新的生成粗糙度的程序绘制。
 
-1. Fork 项目并创建功能分支
-2. 保持提交粒度清晰，说明改动动机
-3. 提交前确保核心脚本可运行
-4. 通过 PR 描述测试方法与影响范围
+
+
+
